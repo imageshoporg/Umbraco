@@ -1,12 +1,23 @@
+# Umbraco Property Editor for Imageshop
 
-# Umbraco property editor for Imageshop
+This Umbraco property editor integrates [Imageshop](https://www.imageshop.org) to enable easy selection and insertion of images directly into your content. It enhances the editing experience by not only embedding the image URL, but also storing rich metadata alongside the image for multilingual and accessibility support.
 
-This property editor will allow you to insert images from Imageshop. Various metadata for the image will also be available. The value of the property editor will be a JSON looking like the one shown below. The user will be able to modify the text for the Norwegian description of the image, which is available from value.text['no'].description. The permalink for the image will be retrieved by using value.image.file.
+## Key Features
 
-This property editor is not backward compatible with the previous string based property editor for Imageshop, which did not contain metadata for the image, but only a link to the actual image in a string. The new editor will store the full json with metadescription in addition to the image.
+* Select and insert images from Imageshop into Umbraco content.
+* Automatically retrieve metadata such as image dimensions, titles, descriptions, and usage rights.
+* Supports multiple languages (e.g. `no`, `en`, `sv`, etc.) for localized metadata.
+* Allows the user to modify the Norwegian (`no`) image description within the editor.
+* Stores the full JSON representation of the image and its metadata.
+* **Not backward compatible** with the older string-based property editor, which only stored image URLs.
 
-```Example json:
+## Value Format
 
+The property editor stores the image data as a JSON object. Below is a description of the structure and fields.
+
+### JSON Example
+
+```json
 {
   "code": "SC-0203",
   "image": {
@@ -19,6 +30,7 @@ This property editor is not backward compatible with the previous string based p
     "no": {
       "title": "Imageshop logo",
       "description": "Imageshop ikon modified",
+      "altText": "Logo av Imageshop",
       "rights": "",
       "credits": "",
       "tags": "",
@@ -27,6 +39,7 @@ This property editor is not backward compatible with the previous string based p
     "en": {
       "title": "Imageshop logo",
       "description": "",
+      "altText": "",
       "rights": "",
       "credits": "",
       "tags": "",
@@ -35,13 +48,16 @@ This property editor is not backward compatible with the previous string based p
     "sv": {
       "title": "imageshop-96.png",
       "description": "Imageshop ikon",
+      "altText": "Ikon från Imageshop",
       "rights": "",
       "credits": "",
       "tags": "",
       "categories": []
     }
   },
-  "extraInfo": { "ShowDescription": "1" },
+  "extraInfo": {
+    "ShowDescription": "1"
+  },
   "documentId": 2865670,
   "AuthorName": null,
   "InterfaceList": [
@@ -53,5 +69,51 @@ This property editor is not backward compatible with the previous string based p
       "InterfaceID": 57332,
       "InterfaceName": "Private"
     }
-  ]
+  ],
+  "focalPoint": {
+    "x": 0.25,
+    "y": -0.1
+  }
 }
+```
+
+## JSON Field Breakdown
+
+| Field                      | Type     | Description                                                                 |                                                                                     |
+| -------------------------- | -------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `code`                     | `string` | A unique identifier for the image (typically an image code or SKU).         |                                                                                     |
+| `image.file`               | `string` | Direct URL to the image file hosted on Imageshop.                           |                                                                                     |
+| `image.width`              | `number` | Width of the image in pixels.                                               |                                                                                     |
+| `image.height`             | `number` | Height of the image in pixels.                                              |                                                                                     |
+| `image.thumbnail`          | `string` | URL to a thumbnail or preview of the image.                                 |                                                                                     |
+| `text`                     | `object` | Localized metadata organized by language code (`no`, `en`, `sv`, etc.).     |                                                                                     |
+| `text.{lang}.title`        | `string` | Title of the image in the specified language.                               |                                                                                     |
+| `text.{lang}.description`  | `string` | Description or caption for the image. Can be edited for Norwegian (`no`).   |                                                                                     |
+| `text.{lang}.altText`      | `string` | Alternative text for accessibility.                                         |                                                                                     |
+| `text.{lang}.rights`       | `string` | Usage rights or license information.                                        |                                                                                     |
+| `text.{lang}.credits`      | `string` | Photographer or source credits.                                             |                                                                                     |
+| `text.{lang}.tags`         | `string` | Comma-separated tags or keywords for search.                                |                                                                                     |
+| `text.{lang}.categories`   | `array`  | Array of categories assigned to the image.                                  |                                                                                     |
+| `text.{lang}.documentinfo` | `array`  | List of additional metadata with `DocumentInfoTypeId`, `Name`, and `Value`. |                                                                                     |
+| `extraInfo`                | \`object | null\`                                                                      | Optional field for additional display/config flags (e.g. `ShowDescription`).        |
+| `documentId`               | `number` | Internal Imageshop document ID.                                             |                                                                                     |
+| `AuthorName`               | \`string | null\`                                                                      | Optional name of the author or creator.                                             |
+| `InterfaceList`            | `array`  | List of interfaces where the image is used (e.g. Public, Private).          |                                                                                     |
+| `profile`                  | \`object | null\`                                                                      | Optional metadata profile (may be null).                                            |
+| `focalPoint`               | \`object | null\`                                                                      | Optional object with `x` and `y` (range: -1.0 to 1.0) for image cropping and focus. |
+
+## Editing Description in Umbraco
+
+The user can edit the Norwegian description of the image through the editor using:
+
+```javascript
+value.text['no'].description
+```
+
+This allows content editors to override or enrich the default description provided by Imageshop.
+
+## Migration Notice
+
+This version is not backward compatible with the old string-based property editor, which only stored a single image URL. The new version stores a rich JSON object including metadata, localized texts, alt texts, and accessibility details.
+
+Legacy data must be manually migrated or transformed to match the new format if you wish to upgrade existing properties.
