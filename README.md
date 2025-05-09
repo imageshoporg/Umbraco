@@ -5,7 +5,7 @@ This property editor will allow you to insert images from Imageshop. Various met
 
 This property editor is not backward compatible with the previous string based property editor for Imageshop, which did not contain metadata for the image, but only a link to the actual image in a string. The new editor will store the full json with metadescription in addition to the image.
 
-Example json:
+```Example json:
 
 {
   "code": "SC-0203",
