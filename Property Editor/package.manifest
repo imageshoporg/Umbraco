@@ -1,0 +1,85 @@
+﻿{   
+    //you can define multiple editors   
+    propertyEditors: [      
+        {
+            /*this must be a unique alias*/ 
+            alias: "screentek.ImageShopEditor",
+            /*the name*/
+            name: "Screentek Imageshop",
+            /*the html file we will load for the editor*/
+            editor: {
+                view: "~/App_Plugins/ImageShopEditor/imageshopeditor.html?v=b",
+				valueType: "JSON"
+            },
+            prevalues: {
+                fields: [
+                    {
+                        label: "Token",
+                        description: "Retrieved from Imageshop",
+                        key: "token",
+                        view: "textstring",
+                        validation: [
+                          {
+                            type: "Required" 
+                          }
+                        ]
+                    },
+                    {
+                        label: "Interface",
+                        description: "A valid Interface in Imageshop",
+                        key: "interface",
+                        view: "textstring",
+                        validation: [
+                        ]
+                    },
+                    {
+                        label: "Prefix",
+                        description: "Prefix of the document code when uploading to Imageshop",
+                        key: "prefix",
+                        view: "textstring",
+                        validation: [
+                        ]
+                    },
+                    {
+                        label: "Predefined sizes",
+                        description: "Predefined sizes the user can select from. Format: <name>;<size>[:<name>;<size>][...] Example: \"Default size;2000x868:Free width;2000x0\". Can be omitted if the user only shall be able to enter free sizes.",
+                        key: "sizes",
+                        view: "textstring",
+                        validation: [
+                        ]
+                    },
+                    {
+                        label: "Profile name",
+                        description: "Size profile, which has to be created by Imageshop. Used to generate serveral sizes and crops from the same images. Use the special value \"empty\" to denote the blank profile. See http://demo.imageshop.no for more information.",
+                        key: "profile",
+                        view: "textstring",
+                        validation: [
+                        ]
+                    },
+                    {
+                        label: "Default priview crop for profile",
+                        description: "Default crop used for preview of image. This must be a valid crop and size for the profile. For example '-Desktop/HD' will display '<permalink>-Desktop/HD' to the permalink. See https://apidocumentation.imageshop.no for more information.",
+                        key: "previewcrop",
+                        view: "textstring",
+                        validation: [
+                        ]
+                    },
+                    {
+                        label: "Hide size dialogue",
+                        description: "If the user shall be able to select a size. The Imageshop sizes must be entered, specifying one size if the size dialogue is hidden.",
+                        key: "hidesizedialgue",
+                        view: "boolean",
+                        validation: [
+                        ]
+                    }
+                
+                ]
+            }
+        }
+    ]
+    ,
+    //array of files we want to inject into the application on app_start
+    javascript: [
+        '~/App_Plugins/ImageShopEditor/imageshopeditor.controller.js?v=c'
+    ]
+}

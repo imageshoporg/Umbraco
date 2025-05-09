@@ -1,0 +1,23 @@
+﻿<div ng-controller="screentek.ImageShopEditorController">
+    <style type="text/css">
+        a.imageshop-button {
+            width: 17px;
+            height: 17px;
+            cursor: pointer;
+            background: url(/App_Plugins/ImageShopEditor/screenteklogo.png) no-repeat;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        img.imageshopimage {
+            max-width: 300px;
+        }
+    </style>
+
+    <div class="imageshop-selector" data-guid='{{guid}}'><b>Selected Image:</b><br /><img ng-name="imageshopimage" src="{{ model.value.image.file + model.config.previewcrop }}" class="imageshopimage" alt="Preview" title="Preview" data-guid='{{guid}}' /><br /><br />
+        <input type="text" class="imageshopurl" value="{{ model.value }}" style="display: none;" data-guid='{{guid}}' data-previewcrop="{{ model.config.previewcrop }}" />
+        <a href="javascript:void(0)" style="color:red;" class="removeimage" data-guid='{{guid}}'>Remove image</a><br/><br/>
+        <b>Description:</b> <span class="imageshopdescription" data-guid='{{guid}}'>{{ model.value.text['no'].description }}</span><br /><br />
+    </div>
+    <b>Pick an image in Imageshop:</b> <a href="javascript:void(0)" class="imageshop-button" data-token="{{ model.config.token }}" data-interface="{{ model.config.interface }}" data-prefix="{{ model.config.prefix }}" data-sizes="{{ model.config.sizes }}" data-profile="{{ model.config.profile }}" data-hidesizedialgue="{{ model.config.hidesizedialgue }}" data-editdescription="0" data-test="1" data-guid="{{ guid }}" title="Insert image from Imageshop">&nbsp;</a>
+</div>
