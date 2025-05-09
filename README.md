@@ -112,6 +112,79 @@ value.text['no'].description
 
 This allows content editors to override or enrich the default description provided by Imageshop.
 
+## Manifest File Configuration
+
+The configuration for the property editor is defined in a manifest file. This file registers the editor with Umbraco and provides editable prevalue fields for token setup, interface, sizing, etc.
+
+### Example manifest file:
+
+```js
+{
+  propertyEditors: [
+    {
+      alias: "screentek.ImageShopEditor",
+      name: "Screentek Imageshop",
+      editor: {
+        view: "~/App_Plugins/ImageShopEditor/imageshopeditor.html?v=b",
+        valueType: "JSON"
+      },
+      prevalues: {
+        fields: [
+          {
+            label: "Token",
+            description: "Retrieved from Imageshop",
+            key: "token",
+            view: "textstring",
+            validation: [{ type: "Required" }]
+          },
+          {
+            label: "Interface",
+            description: "A valid Interface in Imageshop",
+            key: "interface",
+            view: "textstring"
+          },
+          {
+            label: "Prefix",
+            description: "Prefix of the document code when uploading to Imageshop",
+            key: "prefix",
+            view: "textstring"
+          },
+          {
+            label: "Predefined sizes",
+            description: "Predefined sizes the user can select from. Format: <name>;<size>[:<name>;<size>][...]. Example: 'Default size;2000x868:Free width;2000x0'",
+            key: "sizes",
+            view: "textstring"
+          },
+          {
+            label: "Profile name",
+            description: "Size profile created by Imageshop. Use 'empty' to denote the blank profile. See http://demo.imageshop.no for more info.",
+            key: "profile",
+            view: "textstring"
+          },
+          {
+            label: "Default preview crop for profile",
+            description: "Crop suffix for preview (e.g. '-Desktop/HD'). See https://apidocumentation.imageshop.no",
+            key: "previewcrop",
+            view: "textstring"
+          },
+          {
+            label: "Hide size dialogue",
+            description: "Hide or show size selector. If hidden, only predefined size will be used.",
+            key: "hidesizedialgue",
+            view: "boolean"
+          }
+        ]
+      }
+    }
+  ],
+  javascript: [
+    "~/App_Plugins/ImageShopEditor/imageshopeditor.controller.js?v=c"
+  ]
+}
+```
+
+This manifest file should be placed in your Umbraco `App_Plugins/ImageShopEditor` folder. It defines how the editor behaves and what configuration options are available to content administrators.
+
 ## Migration Notice
 
 This version is not backward compatible with the old string-based property editor, which only stored a single image URL. The new version stores a rich JSON object including metadata, localized texts, alt texts, and accessibility details.
