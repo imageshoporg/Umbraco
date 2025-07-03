@@ -1,0 +1,66 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net5.0</TargetFrameworks>
+    <ContentTargetFolders>.</ContentTargetFolders>
+    <Product>Umbraco.ImageShop</Product>
+    <PackageId>Umbraco.ImageShop</PackageId>
+    <Title>Umbraco.ImageShop</Title>
+    <Description>...</Description>
+    <PackageTags>umbraco plugin package umbraco-marketplace</PackageTags>
+    <Version>9.0</Version>
+    <Authors>Imageshop.org;Digitroll AS</Authors>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageTags>imageshop;dam;umbraco-marketplace</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Umbraco.Cms.Web.Website" Version="9.0.0" />
+    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="9.0.0" />
+  </ItemGroup>
+  
+
+  <ItemGroup>
+    <Content Include="App_Plugins\ImageShop\**">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+    </Content>
+    <None Include="build\**">
+      <Pack>true</Pack>
+      <PackagePath>buildTransitive</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="App_Plugins\ImageShop\imageshop.js" />
+    <None Remove="App_Plugins\ImageShop\imageshopeditor.controller.js" />
+    <None Remove="App_Plugins\ImageShop\imageshopeditor.html" />
+    <None Remove="App_Plugins\ImageShop\InsertImage.html" />
+    <None Remove="App_Plugins\ImageShop\readme.txt" />
+    <None Remove="App_Plugins\ImageShop\screenteklogo.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="nupkg\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="App_Plugins\ImageShop\imageshop.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="App_Plugins\ImageShop\imageshopeditor.controller.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="App_Plugins\ImageShop\imageshopeditor.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="App_Plugins\ImageShop\InsertImage.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="App_Plugins\ImageShop\package.manifest">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="App_Plugins\ImageShop\screenteklogo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>

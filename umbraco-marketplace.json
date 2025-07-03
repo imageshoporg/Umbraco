@@ -1,0 +1,29 @@
+{
+  "$schema": "https://marketplace.umbraco.com/umbraco-marketplace-schema.json",
+  "AddOnPackagesRequiredForUmbracoCloud": [],
+  "AlternateCategory": "Editor Tools",
+  "AuthorDetails": {
+    "Name": "Imageshop",
+    "Description": "",
+    "Url": "https://www.imageshop.no/",
+    "ImageUrl": "https://www.imageshop.no/wp-content/uploads/2023/01/imageshop-bildebank-for-bedrifter-logo.svg",
+    "Contributors": [
+      {
+        "Name": "Digitroll AS",
+        "Url": "https://www.Digitroll.no"
+      }
+    ],
+    "SyncContributorsFromRepository": false
+  },
+  "Category": "PIM & DAM",
+  "Description": "Imageshop property editor",
+  "DiscussionForumUrl": "",
+  "DocumentationUrl": "https://github.com/Drawing-Captcha/NuGet/blob/main/README.md",
+  "LicenseTypes": [ "Free" ],
+  "IssueTrackerUrl": "https://github.com/Drawing-Captcha/NuGet/issues",
+  "PackageType": "Package",
+  "Screenshots": [
+  ],
+  "Tags": [ "Media", "DAM", "Files", "Security" ],
+  "Title": "Imageshop DAM integration for Umbraco"
+}
