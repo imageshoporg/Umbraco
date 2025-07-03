@@ -2,15 +2,18 @@
   <PropertyGroup>
     <TargetFrameworks>net5.0</TargetFrameworks>
     <ContentTargetFolders>.</ContentTargetFolders>
-    <Product>Umbraco.ImageShop</Product>
-    <PackageId>Umbraco.ImageShop</PackageId>
-    <Title>Umbraco.ImageShop</Title>
+    <Product>ImageShop.Umbraco</Product>
+    <PackageId>ImageShop.Umbraco</PackageId>
+    <Title>co.ImageShop.Umbraco</Title>
     <Description>...</Description>
-    <PackageTags>umbraco plugin package umbraco-marketplace</PackageTags>
+    <PackageTags>imageshop umbraco plugin package umbraco-marketplace</PackageTags>
     <Version>9.0</Version>
     <Authors>Imageshop.org;Digitroll AS</Authors>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageTags>imageshop;dam;umbraco-marketplace</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/imageshoporg/Umbraco</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,6 +23,7 @@
   
 
   <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\"/>
     <Content Include="App_Plugins\ImageShop\**">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>Always</CopyToPublishDirectory>
