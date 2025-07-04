@@ -8,7 +8,7 @@
             "name": "Screentek Imageshop",
             /*the html file we will load for the editor*/
             "editor": {
-                "view": "~/App_Plugins/ImageShopEditor/imageshopeditor.html?v=b",
+                "view": "~/App_Plugins/ImageShop/imageshopeditor.html?v=b",
 				"valueType": "JSON"
             },
             "prevalues": {
@@ -79,6 +79,6 @@
     ],
     //array of files we want to inject into the application on app_start
     "javascript": [
-        '~/App_Plugins/ImageShopEditor/imageshopeditor.controller.js?v=c'
+        '~/App_Plugins/ImageShop/imageshopeditor.controller.js?v=c'
     ]
 }

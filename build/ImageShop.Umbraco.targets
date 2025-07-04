@@ -1,0 +1,22 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="CopyImageShopFiles" AfterTargets="Build">
+    <PropertyGroup>
+      <ImageShopSource>$(MSBuildThisFileDirectory)..\content\App_plugins\ImageShop</ImageShopSource>
+      <ImageShopTarget>$(ProjectDir)App_Plugins\ImageShop</ImageShopTarget>
+    </PropertyGroup>
+
+    <!-- Capture all files recursively with metadata -->
+    <ItemGroup>
+      <_ImageShopFiles Include="$(ImageShopSource)\**\*.*">
+        <TargetPath>%(RecursiveDir)%(Filename)%(Extension)</TargetPath>
+      </_ImageShopFiles>
+    </ItemGroup>
+
+    <Message Text="Copying ImageShop files from $(ImageShopSource) to $(ImageShopTarget)" Importance="high" />
+
+    <Copy
+      SourceFiles="@(_ImageShopFiles)"
+      DestinationFiles="@(_ImageShopFiles->'$(ImageShopTarget)\%(TargetPath)')"
+      SkipUnchangedFiles="true" />
+  </Target>
+</Project>

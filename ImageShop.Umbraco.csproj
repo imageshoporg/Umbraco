@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net5.0</TargetFrameworks>
+    <ContentTargetFolders>.</ContentTargetFolders>
+    <Version>9.0.1</Version>
+    <Authors>Imageshop.org;Digitroll AS</Authors>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>ImageShop.Umbraco</PackageId>
+    <Product>ImageShop.Umbraco</Product>
+    <Title>ImageShop Editor</Title>
+    <Description>...</Description>
+    <PackageTags>imageshop umbraco plugin package umbraco-marketplace</PackageTags>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RepositoryUrl>https://github.com/imageshoporg/Umbraco</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Umbraco.Cms.Web.Website" Version="9.0.0" />
+    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="App_plugins\ImageShop\**\*" Pack="true" PackagePath="content\App_plugins\ImageShop\" />
+    <None Include="build\ImageShop.Umbraco.targets" Pack="true" PackagePath="build\ImageShop.Umbraco.targets" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="nupkg\" />
+  </ItemGroup>
+
+</Project>

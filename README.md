@@ -125,7 +125,7 @@ The configuration for the property editor is defined in a manifest file. This fi
       alias: "screentek.ImageShopEditor",
       name: "Screentek Imageshop",
       editor: {
-        view: "~/App_Plugins/ImageShopEditor/imageshopeditor.html?v=b",
+        view: "~/App_Plugins/ImageShop/imageshopeditor.html?v=b",
         valueType: "JSON"
       },
       prevalues: {
@@ -178,7 +178,7 @@ The configuration for the property editor is defined in a manifest file. This fi
     }
   ],
   javascript: [
-    "~/App_Plugins/ImageShopEditor/imageshopeditor.controller.js?v=c"
+    "~/App_Plugins/ImageShop/imageshopeditor.controller.js?v=c"
   ]
 }
 ```
