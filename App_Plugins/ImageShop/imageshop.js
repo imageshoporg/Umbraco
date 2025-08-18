@@ -23,7 +23,7 @@ var imageshop = {
         else if (imageshopprofile == "null" || imageshopprofile == "")
             imageshopprofile = null;
 
-        var imageshopsitepath = "/App_Plugins/ImageShop/InsertImage.html?SETDOMAIN=false " + 
+        var imageshopsitepath = "/App_Plugins/Imageshop/InsertImage.html?SETDOMAIN=false " + 
 			((imageshopprofile == null) ? "&IMAGESHOPSIZES=" + sizes : "") + 
             ((imageshopprofile == null) ? "&SHOWSIZEDIALOGUE=" + sizeDialogue : "&SHOWSIZEDIALOGUE=false")  + 
             ((imageshopprofile == null) ? "&SHOWCROPDIALOGUE=true" : "&SHOWCROPDIALOGUE=false") + 

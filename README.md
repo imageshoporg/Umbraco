@@ -122,10 +122,10 @@ The configuration for the property editor is defined in a manifest file. This fi
 {
   propertyEditors: [
     {
-      alias: "screentek.ImageShopEditor",
+      alias: "screentek.ImageshopEditor",
       name: "Screentek Imageshop",
       editor: {
-        view: "~/App_Plugins/ImageShop/imageshopeditor.html?v=b",
+        view: "~/App_Plugins/Imageshop/imageshopeditor.html?v=b",
         valueType: "JSON"
       },
       prevalues: {
@@ -178,12 +178,12 @@ The configuration for the property editor is defined in a manifest file. This fi
     }
   ],
   javascript: [
-    "~/App_Plugins/ImageShop/imageshopeditor.controller.js?v=c"
+    "~/App_Plugins/Imageshop/imageshopeditor.controller.js?v=c"
   ]
 }
 ```
 
-This manifest file should be placed in your Umbraco `App_Plugins/ImageShopEditor` folder. It defines how the editor behaves and what configuration options are available to content administrators.
+This manifest file should be placed in your Umbraco `App_Plugins/ImageshopEditor` folder. It defines how the editor behaves and what configuration options are available to content administrators.
 
 ## Migration Notice
 

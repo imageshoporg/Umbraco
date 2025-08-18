@@ -17,9 +17,9 @@ function getParameterByName(name, url = window.location.href) {
 }
 
 angular.module("umbraco")
-    .controller("screentek.ImageShopEditorController",
+    .controller("screentek.ImageshopEditorController",
         function ($scope, assetsService) {
-            assetsService.loadJs("/App_Plugins/ImageShop/imageshop.js?v=a", $scope)
+            assetsService.loadJs("/App_Plugins/Imageshop/imageshop.js?v=a", $scope)
                 .then(function () {
                     var imageshopChange = function (pguid) {
                         $scope.$apply(function () {
