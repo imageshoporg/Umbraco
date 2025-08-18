@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>net5.0</TargetFrameworks>
     <ContentTargetFolders>.</ContentTargetFolders>
-    <Version>9.0.22</Version>
+    <Version>9.0.2</Version>
     <Authors>Imageshop.org;Digitroll AS</Authors>
   </PropertyGroup>
 
