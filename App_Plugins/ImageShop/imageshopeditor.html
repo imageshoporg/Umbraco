@@ -1,23 +1,109 @@
-﻿<div ng-controller="screentek.ImageshopEditorController">
+﻿<div ng-controller="imageshop.ImageshopEditorController">
     <style type="text/css">
         a.imageshop-button {
             width: 17px;
             height: 17px;
             cursor: pointer;
-            background: url(/App_Plugins/Imageshop/screenteklogo.png) no-repeat;
+            background: url(/App_Plugins/Imageshop/imageshop-logo.png) no-repeat;
+            background-size: contain;
             text-decoration: none;
             display: inline-block;
         }
 
         img.imageshopimage {
-            max-width: 300px;
+            width: calc(100% - 5px);
+            max-height: calc(100% - 5px);
+            background: #ddd;
+            object-fit: contain;
         }
+
+        .imageshop-editor {
+            width: 144px;
+            height: 144px;
+            background: #fff;
+            border: 1px solid #ddd;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            place-items: center;
+        }
+
+            .imageshop-editor.no-image img {
+                display: none;
+            }
+
+            .imageshop-editor.has-image .imageshop-button {
+                display: none;
+            }
+
+            .imageshop-editor.has-image .imageshop-remove-image {
+                display: flex;
+            }
+
+        button.imageshop-button {
+            width: 100px;
+            height: 100px;
+            background: #fff;
+            border: 2px dashed #ddd;
+            color: #ddd;
+            display: flex;
+            justify-content: center;
+            place-items: center;
+        }
+
+            button.imageshop-button:hover {
+                color: #2152a3;
+                border-color: #2152a3;
+            }
+
+            button.imageshop-button .imageshop-add-image-icon {
+                width: 32px;
+                height: 32px;
+            }
+
+                button.imageshop-button .imageshop-add-image-icon svg {
+                    fill: currentColor;
+                }
+
+        button.imageshop-remove-image {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 1px 2px rgba(0,0,0,.25);
+            display: none;
+            justify-content: center;
+            width: 25px;
+            height: 25px;
+            border: none;
+            color: red;
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+        }
+
+            button.imageshop-remove-image svg {
+                fill: currentColor;
+            }
     </style>
 
-    <div class="imageshop-selector" data-guid='{{guid}}'><b>Selected Image:</b><br /><img ng-name="imageshopimage" src="{{ model.value.image.file + model.config.previewcrop }}" class="imageshopimage" alt="Preview" title="Preview" data-guid='{{guid}}' /><br /><br />
+    <!--<div class="imageshop-selector" data-guid='{{guid}}'>
+        <b>Selected Image:</b>
+        <img ng-name="imageshopimage" src="{{ model.value.image.file + model.config.previewcrop }}" class="imageshopimage" alt="Preview" title="Preview" data-guid='{{guid}}' />
         <input type="text" class="imageshopurl" value="{{ model.value }}" style="display: none;" data-guid='{{guid}}' data-previewcrop="{{ model.config.previewcrop }}" />
-        <a href="javascript:void(0)" style="color:red;" class="removeimage" data-guid='{{guid}}'>Remove image</a><br/><br/>
-        <b>Description:</b> <span class="imageshopdescription" data-guid='{{guid}}'>{{ model.value.text['no'].description }}</span><br /><br />
+        <a href="javascript:void(0)" style="color:red;" class="removeimage" data-guid='{{guid}}'>Remove image</a>
+        <b>Description:</b> <span class="imageshopdescription" data-guid='{{guid}}'>{{ model.value.text['no'].description }}</span>
     </div>
-    <b>Pick an image in Imageshop:</b> <a href="javascript:void(0)" class="imageshop-button" data-token="{{ model.config.token }}" data-interface="{{ model.config.interface }}" data-prefix="{{ model.config.prefix }}" data-sizes="{{ model.config.sizes }}" data-profile="{{ model.config.profile }}" data-hidesizedialgue="{{ model.config.hidesizedialgue }}" data-editdescription="0" data-test="1" data-guid="{{ guid }}" title="Insert image from Imageshop">&nbsp;</a>
+    <b>Pick an image in Imageshop:</b> <a href="javascript:void(0)" class="imageshop-button" data-token="{{ model.config.token }}" data-interface="{{ model.config.interface }}" data-prefix="{{ model.config.prefix }}" data-sizes="{{ model.config.sizes }}" data-profile="{{ model.config.profile }}" data-hidesizedialgue="{{ model.config.hidesizedialgue }}" data-editdescription="0" data-test="1" data-guid="{{ guid }}" title="Insert image from Imageshop">&nbsp;</a>-->
+
+    <div class="imageshop-editor no-image" data-guid='{{guid}}'>
+        <input type="text" class="imageshopurl" value="{{ model.value }}" style="display: none;" data-guid='{{guid}}' data-previewcrop="{{ model.config.previewcrop }}" />
+        <button class="imageshop-button" type="button" data-token="{{ model.config.token }}" data-interface="{{ model.config.interface }}" data-prefix="{{ model.config.prefix }}" data-sizes="{{ model.config.sizes }}" data-profile="{{ model.config.profile }}" data-hidesizedialgue="{{ model.config.hidesizedialgue }}" data-editdescription="0" data-test="1" data-guid="{{ guid }}" data-showvideo="{{model.config.showVideo}}" title="Insert image from Imageshop">
+            <div class="imageshop-add-image-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M420.592 214.291H296.104V89.804h-83.102v124.487H88.518v83.104h124.484v124.488h83.102V297.395h124.488z"></path></svg>
+            </div>
+        </button>
+        <img ng-name="imageshopimage" src="{{ model.value.image.file + model.config.previewcrop }}" class="imageshopimage" alt="Preview" title="Preview" data-guid='{{guid}}' />
+        <button class="imageshop-remove-image" data-guid='{{guid}}' type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M401.431 167.814l-58.757-58.76-88.029 88.026-88.028-88.026-58.76 58.76 88.026 88.027-88.026 88.024 58.76 58.768 88.028-88.031 88.029 88.031 58.757-58.768-88.027-88.024z"></path></svg>
+        </button>
+    </div>
 </div>

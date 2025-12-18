@@ -14,6 +14,6 @@
     <Copy
       SourceFiles="@(_ImageshopFiles)"
       DestinationFiles="@(_ImageshopFiles->'$(ImageshopTarget)\%(RecursiveDir)%(Filename)%(Extension)')"
-      SkipUnchangedFiles="true" />
+      SkipUnchangedFiles="false" />
   </Target>
 </Project>

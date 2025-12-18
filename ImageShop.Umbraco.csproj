@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net5.0</TargetFrameworks>
+    <TargetFrameworks>net8.0</TargetFrameworks>
     <ContentTargetFolders>.</ContentTargetFolders>
-    <Version>9.0.2</Version>
+    <Version>13.0.0</Version>
     <Authors>Imageshop.org;Digitroll AS</Authors>
   </PropertyGroup>
 
@@ -20,10 +20,28 @@
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Umbraco.Cms.Web.Website" Version="9.0.0" />
-    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="9.0.0" />
+    <PackageReference Include="Umbraco.Cms.Web.Website" Version="13.*" />
+    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="13.*" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="App_Plugins\Imageshop\package.manifest.template" />
+  </ItemGroup>
+
+  <Target Name="GeneratePackageManifest" BeforeTargets="Build">
+    <PropertyGroup>
+      <ManifestTemplate>$(ProjectDir)App_Plugins\Imageshop\package.manifest.template</ManifestTemplate>
+      <ManifestOutput>$(ProjectDir)App_Plugins\Imageshop\package.manifest</ManifestOutput>
+    </PropertyGroup>
+
+    <Message Text="Generating package.manifest with version $(Version)" Importance="High" />
+
+    <WriteLinesToFile
+        File="$(ManifestOutput)"
+        Lines="$([System.IO.File]::ReadAllText('$(ManifestTemplate)').Replace('__VERSION__', '$(Version)'))"
+        Overwrite="true" />
+  </Target>
+  
   <ItemGroup>
     <None Include="Controllers\ImageshopApiController.cs" />
     <None Include="Configuration\ImageshopSettings.cs" />

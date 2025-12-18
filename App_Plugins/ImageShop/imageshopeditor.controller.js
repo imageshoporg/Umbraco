@@ -17,17 +17,21 @@ function getParameterByName(name, url = window.location.href) {
 }
 
 angular.module("umbraco")
-    .controller("screentek.ImageshopEditorController",
+    .controller("imageshop.ImageshopEditorController",
         function ($scope, assetsService) {
-            assetsService.loadJs("/App_Plugins/Imageshop/imageshop.js?v=a", $scope)
+            assetsService.loadJs("/App_Plugins/Imageshop/imageshop.js?v=13.0.0", $scope)
                 .then(function () {
+
                     var imageshopChange = function (pguid) {
                         $scope.$apply(function () {
                             $scope.model.value = JSON.parse($(".imageshopurl[data-guid='" + pguid + "']").val());
                             $scope.image = $(".imageshopimage[data-guid='" + pguid + "']");
                             $scope.description = $(".imageshopdescription[data-guid='" + pguid + "']");
+                            $scope.editor = $(".imageshop-editor[data-guid='" + pguid + "']");
                             $scope.description.text($scope.model.value.text[getCulture()].description);
-                            $scope.selector.show();
+
+                            $scope.editor.removeClass("no-image");
+                            $scope.editor.addClass("has-image");
                         });
                     };
 
@@ -42,12 +46,8 @@ angular.module("umbraco")
                     $scope.textbox = $(".imageshopurl:eq( " + _boxNumber + " )");
                     $scope.image = $(".imageshopimage:eq( " + _boxNumber + " )");
                     $scope.description = $(".imageshopdescription:eq( " + _boxNumber + " )");
-                    $scope.removebutton = $(".removeimage:eq( " + _boxNumber + " )");
-                    $scope.selector = $(".imageshop-selector:eq( " + _boxNumber + " )");
+                    $scope.editor = $(".imageshop-editor:eq( " + _boxNumber + " )");
 
-                    //$scope.textbox.attr("data-guid", guid);
-                    //$scope.image.attr("data-guid", guid);
-                    //$scope.description.attr("data-guid", guid);
 
                     $scope.boxNumber = _boxNumber;
                     _boxNumber = _boxNumber + 1;
@@ -58,9 +58,9 @@ angular.module("umbraco")
                         else
                             $scope.image.attr("src", $scope.model.value.image.file);
                         $scope.description.text($scope.model.value.text[getCulture()].description);
-                        $scope.selector.show();
+                        $scope.editor.addClass("has-image");
+                        $scope.editor.removeClass("no-image");
                     } else {
-                        $scope.selector.hide();
                     }
                     $scope.textbox.data("value", $scope.textbox.val());
                     $(".imageshop-button").click(function () {
@@ -71,14 +71,16 @@ angular.module("umbraco")
                             $(this));
                     });
 
-                    $(".removeimage").click(function () {
+                    $(".imageshop-remove-image").click(function () {
                         var thisGuid = $(this).data("guid");
                         if (thisGuid == $scope.guid) {
                             var imageshopurllocal = $(".imageshopurl[data-guid='" + thisGuid + "']");
-                            var imageshopselector = $(".imageshop-selector[data-guid='" + thisGuid + "']");
                             $scope.model.value = "";
                             imageshopurllocal.val("");
-                            imageshopselector.hide();
+                            var imageshopEditor = $scope.editor;
+
+                            imageshopEditor.addClass("no-image");
+                            imageshopEditor.removeClass("has-image");
                         }
                     });
 
@@ -88,8 +90,8 @@ angular.module("umbraco")
                         if (val && data !== val) {
                             $(".imageshopurl[data-guid='" + guid + "']").data("value", val);
                             imageshopChange(guid);
-                            }
-                        },
+                        }
+                    },
                         100);
 
 

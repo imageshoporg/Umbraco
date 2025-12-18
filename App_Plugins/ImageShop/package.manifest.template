@@ -1,4 +1,4 @@
-{   
+﻿{   
     //you can define multiple editors   
     "propertyEditors": [      
         {
@@ -8,7 +8,7 @@
             "name": "Imageshop",
             /*the html file we will load for the editor*/
           "editor": {
-            "view": "~/App_Plugins/Imageshop/imageshopeditor.html?v=13.0.0",
+            "view": "~/App_Plugins/Imageshop/imageshopeditor.html?v=__VERSION__",
             "valueType": "JSON"
           },
             "prevalues": {
@@ -86,6 +86,6 @@
     ],
     //array of files we want to inject into the application on app_start
   "javascript": [
-    "~/App_Plugins/Imageshop/imageshopeditor.controller.js?v=13.0.0"
+    "~/App_Plugins/Imageshop/imageshopeditor.controller.js?v=__VERSION__"
   ]
 }

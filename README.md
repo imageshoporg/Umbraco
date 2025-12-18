@@ -10,6 +10,32 @@ This Umbraco property editor integrates [Imageshop](https://www.imageshop.org) t
 * Allows the user to modify the Norwegian (`no`) image description within the editor.
 * Stores the full JSON representation of the image and its metadata.
 * **Not backward compatible** with the older string-based property editor, which only stored image URLs.
+* Extends umbracos Rich text editor. (TinyMCE)
+
+
+## Rendering content in Umbraco
+
+Below is a simple example rendering a selected image using the property editor in a \<picture\> element with a smaller fallback image.
+
+```cs
+@using Newtonsoft.Json.Linq.JToken
+@{
+  var imageshopProperty = @Model.Value<JToken>("imageShop");
+  var imageshopImage = imageshopProperty["image"];
+  var imageFile = imageshopImage["file"].ToString();
+  var imageWidth = (int)imageshopImage["width"];
+  var imageHeight = (int)imageshopImage["height"];
+  var mimeType = imageshopImage["mimeType"];
+
+  var smallImage = $"{imageshopFile}__cropmode=FITBOTH_h={imageHeight / 10}_w={imageWidth / 10}";
+}
+
+
+<picture>
+    <source type="@mimeType" data-srcset="@imageFile 1x" width="@imageWidth" height="@imageHeight">
+    <img src="@smallImage" data-srcset="@imageFile 1x" width="@imageWidth" height="@imageHeight">
+</picture>
+```
 
 ## Value Format
 
@@ -79,28 +105,29 @@ The property editor stores the image data as a JSON object. Below is a descripti
 
 ## JSON Field Breakdown
 
-| Field                      | Type     | Description                                                                 |                                                                                     |
-| -------------------------- | -------- | --------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `code`                     | `string` | A unique identifier for the image (typically an image code or SKU).         |                                                                                     |
-| `image.file`               | `string` | Direct URL to the image file hosted on Imageshop.                           |                                                                                     |
-| `image.width`              | `number` | Width of the image in pixels.                                               |                                                                                     |
-| `image.height`             | `number` | Height of the image in pixels.                                              |                                                                                     |
-| `image.thumbnail`          | `string` | URL to a thumbnail or preview of the image.                                 |                                                                                     |
-| `text`                     | `object` | Localized metadata organized by language code (`no`, `en`, `sv`, etc.).     |                                                                                     |
-| `text.{lang}.title`        | `string` | Title of the image in the specified language.                               |                                                                                     |
-| `text.{lang}.description`  | `string` | Description or caption for the image. Can be edited for Norwegian (`no`).   |                                                                                     |
-| `text.{lang}.altText`      | `string` | Alternative text for accessibility.                                         |                                                                                     |
-| `text.{lang}.rights`       | `string` | Usage rights or license information.                                        |                                                                                     |
-| `text.{lang}.credits`      | `string` | Photographer or source credits.                                             |                                                                                     |
-| `text.{lang}.tags`         | `string` | Comma-separated tags or keywords for search.                                |                                                                                     |
-| `text.{lang}.categories`   | `array`  | Array of categories assigned to the image.                                  |                                                                                     |
-| `text.{lang}.documentinfo` | `array`  | List of additional metadata with `DocumentInfoTypeId`, `Name`, and `Value`. |                                                                                     |
-| `extraInfo`                | \`object | null\`                                                                      | Optional field for additional display/config flags (e.g. `ShowDescription`).        |
-| `documentId`               | `number` | Internal Imageshop document ID.                                             |                                                                                     |
-| `AuthorName`               | \`string | null\`                                                                      | Optional name of the author or creator.                                             |
-| `InterfaceList`            | `array`  | List of interfaces where the image is used (e.g. Public, Private).          |                                                                                     |
-| `profile`                  | \`object | null\`                                                                      | Optional metadata profile (may be null).                                            |
-| `focalPoint`               | \`object | null\`                                                                      | Optional object with `x` and `y` (range: -1.0 to 1.0) for image cropping and focus. |
+
+| Field                      | Type     | Description                                                                |                                                                                    |
+| ---------------------------- | ---------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `code`                     | `string` | A unique identifier for the image (typically an image code or SKU).        |                                                                                    |
+| `image.file`               | `string` | Direct URL to the image file hosted on Imageshop.                          |                                                                                    |
+| `image.width`              | `number` | Width of the image in pixels.                                              |                                                                                    |
+| `image.height`             | `number` | Height of the image in pixels.                                             |                                                                                    |
+| `image.thumbnail`          | `string` | URL to a thumbnail or preview of the image.                                |                                                                                    |
+| `text`                     | `object` | Localized metadata organized by language code (`no`, `en`, `sv`, etc.).    |                                                                                    |
+| `text.{lang}.title`        | `string` | Title of the image in the specified language.                              |                                                                                    |
+| `text.{lang}.description`  | `string` | Description or caption for the image. Can be edited for Norwegian (`no`).  |                                                                                    |
+| `text.{lang}.altText`      | `string` | Alternative text for accessibility.                                        |                                                                                    |
+| `text.{lang}.rights`       | `string` | Usage rights or license information.                                       |                                                                                    |
+| `text.{lang}.credits`      | `string` | Photographer or source credits.                                            |                                                                                    |
+| `text.{lang}.tags`         | `string` | Comma-separated tags or keywords for search.                               |                                                                                    |
+| `text.{lang}.categories`   | `array`  | Array of categories assigned to the image.                                 |                                                                                    |
+| `text.{lang}.documentinfo` | `array`  | List of additional metadata with`DocumentInfoTypeId`, `Name`, and `Value`. |                                                                                    |
+| `extraInfo`                | \`object | null\`                                                                     | Optional field for additional display/config flags (e.g.`ShowDescription`).        |
+| `documentId`               | `number` | Internal Imageshop document ID.                                            |                                                                                    |
+| `AuthorName`               | \`string | null\`                                                                     | Optional name of the author or creator.                                            |
+| `InterfaceList`            | `array`  | List of interfaces where the image is used (e.g. Public, Private).         |                                                                                    |
+| `profile`                  | \`object | null\`                                                                     | Optional metadata profile (may be null).                                           |
+| `focalPoint`               | \`object | null\`                                                                     | Optional object with`x` and `y` (range: -1.0 to 1.0) for image cropping and focus. |
 
 ## Editing Description in Umbraco
 
@@ -122,8 +149,8 @@ The configuration for the property editor is defined in a manifest file. This fi
 {
   propertyEditors: [
     {
-      alias: "screentek.ImageshopEditor",
-      name: "Screentek Imageshop",
+      alias: "imageshop.ImageshopEditor",
+      name: "Imageshop",
       editor: {
         view: "~/App_Plugins/Imageshop/imageshopeditor.html?v=b",
         valueType: "JSON"
