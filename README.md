@@ -37,6 +37,44 @@ Below is a simple example rendering a selected image using the property editor i
 </picture>
 ```
 
+## Rich text editor
+
+To use imageshop in Umbraco's rich text editor, some minimum settings are required:
+
+```json
+{
+  "Umbraco": {
+    "CMS": {
+      "RichTextEditor": {
+        "CustomConfig": {
+          "external_plugins": "{\"imageshop\":\"/App_Plugins/Imageshop/imageshop-tinymce.js\"}"
+        },
+        "Commands": [
+          {
+            "Alias": "imageshop",
+            "Name": "ImageShop",
+            "Mode": "Insert"
+          },
+          {
+            "Alias": "imageshopvideo",
+            "Name": "ImageShop Video",
+            "Mode": "Insert"
+          }
+        ]
+      }
+    }
+  },
+  "Imageshop": {
+    "Token": "<your-imageshop-token>"
+  }
+}
+```
+
+### Enable imageshop in Richtext editor toolbar
+
+After the appsettings are added you can navigate to umbraco admin > Settings > Data Types > Richtext editor and locate and check the checkboxes under Toolbar for "Imageshop image" and "Imageshop video".
+A button for adding image and video from Imageshop should now be available in the Rich text editor for Umbraco.
+
 ## Value Format
 
 The property editor stores the image data as a JSON object. Below is a description of the structure and fields.
