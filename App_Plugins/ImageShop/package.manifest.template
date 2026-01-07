@@ -86,6 +86,6 @@
     ],
     //array of files we want to inject into the application on app_start
   "javascript": [
-    "~/App_Plugins/Imageshop/imageshopeditor.controller.js?v=__VERSION__"
+    "~/App_Plugins/Imageshop/imageshopeditor.controller.js"
   ]
 }
