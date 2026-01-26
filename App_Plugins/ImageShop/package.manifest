@@ -8,7 +8,7 @@
             "name": "Imageshop",
             /*the html file we will load for the editor*/
           "editor": {
-            "view": "~/App_Plugins/Imageshop/imageshopeditor.html?v=13.0.1",
+            "view": "~/App_Plugins/Imageshop/imageshopeditor.html?v=13.0.2",
             "valueType": "JSON"
           },
             "prevalues": {
