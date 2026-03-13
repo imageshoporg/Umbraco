@@ -15,65 +15,74 @@ This Umbraco property editor integrates [Imageshop](https://www.imageshop.org) t
 
 ## Rendering content in Umbraco
 
-Below is a simple example rendering a selected image using the property editor in a \<picture\> element with a smaller fallback image.
+Below is a simple example showing how to implement an image and a video in a umbraco template using a Document type with 3 properties (1 image and 1 video) using the Imageshop property editor.
 
 ```cs
-@using Newtonsoft.Json.Linq.JToken
+@using Umbraco.Cms.Web.Common.PublishedModels;
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Imageshop> // document type containing property editor for imageshop image and imageshop video (showVideo enabled)
+@using System.Text.Json
+
 @{
-  var imageshopProperty = @Model.Value<JToken>("imageShop");
-  var imageshopImage = imageshopProperty["image"];
-  var imageFile = imageshopImage["file"].ToString();
-  var imageWidth = (int)imageshopImage["width"];
-  var imageHeight = (int)imageshopImage["height"];
-  var mimeType = imageshopImage["mimeType"];
+	Layout = null;
+	string culture = System.Threading.Thread.CurrentThread.CurrentCulture.TwoLetterISOLanguageName;
+	// image
+	var imageJson = Model.Value<JsonDocument>("imageshopImage");
+	string imageUrl = null;
+	string imageAltText = "";
+	if (imageJson != null) {
+		var root = imageJson.RootElement;
+		
+		if (root.TryGetProperty("image", out var imageProp) && imageProp.TryGetProperty("file", out var fileProp)) {
+			imageUrl = fileProp.GetString();
+		}
 
-  var smallImage = $"{imageshopFile}__cropmode=FITBOTH_h={imageHeight / 10}_w={imageWidth / 10}";
+		if (root.TryGetProperty("text", out var textProp) &&
+            textProp.TryGetProperty(culture, out var cultureProp) &&
+            cultureProp.TryGetProperty("altText", out var altProp))
+        {
+            imageAltText = altProp.GetString();
+        }
+	}
+	// video
+	var videoJson = Model.Value<JsonDocument>("imageshopVideo");
+	string videoUrl = null;
+	string videoAltText = "";
+	if (videoJson != null) {
+		var root = videoJson.RootElement;
+		
+		if (root.TryGetProperty("videos", out var videosProp) &&
+			videosProp.ValueKind == JsonValueKind.Array &&
+			videosProp.GetArrayLength() > 0)
+		{
+			var firstVideo = videosProp[0];
+
+			if (firstVideo.TryGetProperty("file", out var fileProp))
+			{
+				videoUrl = fileProp.GetString();
+			}
+		}
+
+		if (root.TryGetProperty("text", out var textProp) &&
+            textProp.TryGetProperty(culture, out var cultureProp) &&
+            cultureProp.TryGetProperty("altText", out var altProp))
+        {
+            videoAltText = altProp.GetString();
+        }
+	}
 }
-
-
-<picture>
-    <source type="@mimeType" data-srcset="@imageFile 1x" width="@imageWidth" height="@imageHeight">
-    <img src="@smallImage" data-srcset="@imageFile 1x" width="@imageWidth" height="@imageHeight">
-</picture>
+<div>
+	@if (@imageUrl != null) {
+		<img src="@imageUrl" alt="@imageAltText" />
+	}
+	@if (@videoUrl != null) {
+		<video controls autoplay aria-label="@videoAltText">
+			<source src="@videoUrl" />
+		</video>
+	}
+</div>
 ```
 
-## Rich text editor
-
-To use imageshop in Umbraco's rich text editor, some minimum settings are required:
-
-```json
-{
-  "Umbraco": {
-    "CMS": {
-      "RichTextEditor": {
-        "CustomConfig": {
-          "external_plugins": "{\"imageshop\":\"/App_Plugins/Imageshop/imageshop-tinymce.js\"}"
-        },
-        "Commands": [
-          {
-            "Alias": "imageshop",
-            "Name": "ImageShop",
-            "Mode": "Insert"
-          },
-          {
-            "Alias": "imageshopvideo",
-            "Name": "ImageShop Video",
-            "Mode": "Insert"
-          }
-        ]
-      }
-    }
-  },
-  "Imageshop": {
-    "Token": "<your-imageshop-token>"
-  }
-}
-```
-
-### Enable imageshop in Richtext editor toolbar
-
-After the appsettings are added you can navigate to umbraco admin > Settings > Data Types > Richtext editor and locate and check the checkboxes under Toolbar for "Imageshop image" and "Imageshop video".
-A button for adding image and video from Imageshop should now be available in the Rich text editor for Umbraco.
 
 ## Value Format
 

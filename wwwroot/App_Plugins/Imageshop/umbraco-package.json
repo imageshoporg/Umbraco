@@ -1,0 +1,80 @@
+{
+  "id": "Umbraco.Imageshop",
+  "name": "Umbraco.Imageshop",
+  "version": "17.0.0",
+  "allowTelemetry": true,
+  "extensions": [
+    {
+      "type": "propertyEditorUi",
+      "alias": "Imageshop.PropertyEditorUi",
+      "name": "Imageshop Property Editor",
+      "element": "/App_Plugins/Imageshop/imageshop.js",
+      "elementName": "imageshop-property-editor-ui",
+      "meta": {
+        "label": "Imageshop",
+        "icon": "icon-list",
+        "group": "common",
+        "propertyEditorSchemaAlias": "Umbraco.Plain.Json",
+        "settings": {
+          "properties": [
+            {
+              "alias": "token",
+              "label": "Api Token",
+              "description": "Retrieved from imageshop",
+              "propertyEditorUiAlias": "Umb.PropertyEditorUi.TextBox"
+            },
+            {
+              "alias": "interface",
+              "label": "Interface",
+              "description": "A valid Interface in Imageshop",
+              "propertyEditorUiAlias": "Umb.PropertyEditorUi.TextBox"
+            },
+            {
+              "alias": "prefix",
+              "label": "Prefix",
+              "description": "Prefix of the document code when uploading to Imageshop",
+              "propertyEditorUiAlias": "Umb.PropertyEditorUi.TextBox"
+            },
+            {
+              "alias": "sizes",
+              "label": "Predefined sizes",
+              "description": "Predefined sizes the user can select from. Format: <name>;<size>[:<name>;<size>][...] Example: \"Default size;2000x868:Free width;2000x0\". Can be omitted if the user only shall be able to enter free sizes.",
+              "propertyEditorUiAlias": "Umb.PropertyEditorUi.TextBox"
+            },
+            {
+              "alias": "profile",
+              "label": "Profile name",
+              "description": "Size profile, which has to be created by Imageshop. Used to generate serveral sizes and crops from the same images. Use the special value \"empty\" to denote the blank profile. See http://demo.imageshop.no for more information.",
+              "propertyEditorUiAlias": "Umb.PropertyEditorUi.TextBox"
+            },
+            {
+              "alias": "previewcrop",
+              "label": "Default preview crop for profile",
+              "description": "Default crop used for preview of image. This must be a valid crop and size for the profile. For example '-Desktop/HD' will display '<permalink>-Desktop/HD' to the permalink. See https://apidocumentation.imageshop.no for more information.",
+              "propertyEditorUiAlias": "Umb.PropertyEditorUi.TextBox"
+            },
+            {
+              "alias": "profile",
+              "label": "Profile name",
+              "description": "",
+              "propertyEditorUiAlias": "Umb.PropertyEditorUi.TextBox"
+            },
+            {
+              "alias": "hidesizedialogue",
+              "label": "Hide size dialogue",
+              "description": "If the user shall be able to select a size. The Imageshop sizes must be entered, specifying one size if the size dialogue is hidden.",
+              "propertyEditorUiAlias": "Umb.PropertyEditorUi.Toggle"
+            },
+            {
+              "alias": "showvideo",
+              "label": "Show video",
+              "description": "Enables picking of video files",
+              "propertyEditorUiAlias": "Umb.PropertyEditorUi.Toggle"
+            }
+
+          ]
+        }
+      }
+    }
+  ]
+}

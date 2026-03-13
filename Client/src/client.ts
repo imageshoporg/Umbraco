@@ -1,0 +1,1 @@
+import './imageshop-property-editor-ui'
