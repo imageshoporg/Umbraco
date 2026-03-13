@@ -1,57 +1,57 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
   <PropertyGroup>
-    <TargetFrameworks>net8.0</TargetFrameworks>
-    <ContentTargetFolders>.</ContentTargetFolders>
-    <Version>13.0.2</Version>
-    <Authors>Imageshop.org;Digitroll AS</Authors>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
+    <Version>17.0.0</Version>
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageId>Imageshop.Umbraco</PackageId>
-    <Product>Imageshop.Umbraco</Product>
-    <Title>Imageshop Editor</Title>
-    <Description>...</Description>
+    <PackageId>Umbraco.Imageshop</PackageId>
+    <Product>Umbraco.Imageshop</Product>
+    <Title>Imageshop</Title>
     <PackageTags>imageshop umbraco plugin package umbraco-marketplace</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
-  </PropertyGroup>
-  <PropertyGroup>
+    <Authors>Imageshop.org;Digitroll AS</Authors>
     <RepositoryUrl>https://github.com/imageshoporg/Umbraco</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Umbraco.Cms.Web.Website" Version="13.*" />
-    <PackageReference Include="Umbraco.Cms.Web.BackOffice" Version="13.*" />
-  </ItemGroup>
 
-  <ItemGroup>
-    <None Include="App_Plugins\Imageshop\package.manifest.template" />
-  </ItemGroup>
 
-  <Target Name="GeneratePackageManifest" BeforeTargets="Build">
-    <PropertyGroup>
-      <ManifestTemplate>$(ProjectDir)App_Plugins\Imageshop\package.manifest.template</ManifestTemplate>
-      <ManifestOutput>$(ProjectDir)App_Plugins\Imageshop\package.manifest</ManifestOutput>
-    </PropertyGroup>
-
-    <Message Text="Generating package.manifest with version $(Version)" Importance="High" />
-
-    <WriteLinesToFile
-        File="$(ManifestOutput)"
-        Lines="$([System.IO.File]::ReadAllText('$(ManifestTemplate)').Replace('__VERSION__', '$(Version)'))"
-        Overwrite="true" />
+  <Target Name="BuildClient" BeforeTargets="Build;Pack">
+    <Exec Command="npm install" WorkingDirectory="Client" Condition="!Exists('Client\node_modules')" />
+    <Exec Command="npm run build" WorkingDirectory="Client" />
   </Target>
-  
+
   <ItemGroup>
-    <None Include="Controllers\ImageshopApiController.cs" />
-    <None Include="Configuration\ImageshopSettings.cs" />
-    <None Include="README.md" Pack="true" PackagePath="\" />
-    <None Include="App_plugins\Imageshop\**\*" Pack="true" PackagePath="content\App_plugins\Imageshop\" />
-    <Compile Remove="App_plugins\Imageshop\Views\ImageShopSettings.cs" />
-    <None Include="build\Imageshop.Umbraco.targets" Pack="true" PackagePath="build\Imageshop.Umbraco.targets" />
+    <PackageReference Include="Umbraco.Cms.Web.Website" Version="*" />
+    <PackageReference Include="Umbraco.Cms.Web.Common" Version="*" />
+    <PackageReference Include="Umbraco.Cms.Api.Common" Version="*" />
+    <PackageReference Include="Umbraco.Cms.Api.Management" Version="*" />
   </ItemGroup>
+
+  <ItemGroup>
+    <!-- Dont include the client folder as part of packaging nuget build -->
+    <Content Remove="Client\**" />
+
+    <!-- However make the Umbraco-package.json included for dotnet pack or nuget package and visible to the solution -->
+    <None Include="Client\public\umbraco-package.json" Pack="false" />
+    <None Include="README.md" pack="True">
+      <PackagePath>\</PackagePath>
+    </None>
+    <Content Update="wwwroot\**\*">
+      <Pack>true</Pack>
+      <PackagePath>wwwroot</PackagePath>
+    </Content>
+  </ItemGroup>
+
   <ItemGroup>
     <Folder Include="nupkg\" />
+    <Folder Include="wwwroot\" />
+    <Folder Include="wwwroot\App_Plugins\Imageshop\" />
   </ItemGroup>
+
 
 </Project>
