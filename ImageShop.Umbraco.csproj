@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageId>Umbraco.Imageshop</PackageId>
-    <Product>Umbraco.Imageshop</Product>
+    <PackageId>Imageshop.Umbraco</PackageId>
+    <Product>Imageshop.Umbraco</Product>
     <Title>Imageshop</Title>
     <PackageTags>imageshop umbraco plugin package umbraco-marketplace</PackageTags>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
